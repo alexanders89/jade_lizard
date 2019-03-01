@@ -47,7 +47,7 @@ A rough outline of the chunks of work I identified
 2. Clients can visit the server and are logged as a new users
 3. Once they leave, the user is removed from storage
 4. They can (somehow) make a request to subscribe with a list of stocks they want to know about
-5. These are added to their profile
+5. These stocks are added to their profile
 6. Via a similar process they can unsubscribe from services
 7. When they are subscribed, new data is pushed out only about the stocks they have subscribed to
 8. If no one is subscribed, the server should not trigger any functions
