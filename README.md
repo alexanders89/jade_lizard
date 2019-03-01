@@ -7,3 +7,8 @@ Create a market data subscription microservice. The service should support two r
 
 - Subscribe
 - Unsubscribe
+
+1. Host an express app
+2. Clients can visit the server and are logged as a new users
+3. Once they leave, the user is removed from storage
+4.

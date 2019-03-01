@@ -15,7 +15,32 @@ const server = app.listen(port, () =>{
 
 let users = []
 
+let currentSubscriptions = []
+
 app.use(express.static('public'))
+
+app.use(bodyParser.json())
+
+app.post('/subscribe', (req, res) =>{
+  subscribeUser(req.body)
+  res.status(200).send("Hello You!")
+})
+
+subscribeUser = (data) => {
+  for(let i = 0; i < users.length; i++){
+    if(users[i].id == data.id){
+      data.stocks.forEach(function(stock){
+        if(!users[i].stocks.includes(stock)){
+          users[i].stocks.push(stock)
+        }
+      })
+      let mySocket = users[i].socketInfo
+      mySocket.emit('subscribe', data.stocks)
+      break
+    }
+  }
+  console.log(users)
+}
 
 let io = socket(server)
 
@@ -24,6 +49,7 @@ addUser = (data) => {
   user.id = data.id
   user.stocks = []
   users.push(user)
+  user.socketInfo = data
   console.log(users)
 }
 
@@ -39,8 +65,10 @@ removeUser = (data) => {
 
 io.on('connection', (socket) => {
   addUser(socket)
+  socket.emit('welcome', socket.id)
   socket.on('disconnect', ()=>{
     removeUser(socket)
   })
 })
+
 module.exports = server
