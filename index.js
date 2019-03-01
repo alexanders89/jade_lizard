@@ -14,3 +14,11 @@ const server = app.listen(port, () =>{
 })
 
 app.use(express.static('public'))
+
+let io = socket(server)
+
+io.on('connection', function(){
+  console.log("new user")
+})
+
+module.exports = server
