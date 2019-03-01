@@ -5,27 +5,35 @@ const app = express()
 const bodyParser = require('body-parser')
 const path = require('path')
 const socket = require('socket.io')
-const port = process.env.PORT
+const port = process.env.PORT || 8080
 
 const stockData = require('./tickData.json')
 
 const server = app.listen(port, () =>{
-  console.log("All is OK")
+  console.log(`All is OK on port: ${port}`)
 })
 
+//Holding data on the users and what they have subscribed to
 let users = []
-
 let currentSubscriptions = []
 
+//middleware
 app.use(express.static('public'))
-
 app.use(bodyParser.json())
 
+
+//Routes
 app.post('/subscribe', (req, res) =>{
   subscribeUser(req.body)
   res.status(200).send("Hello You!")
 })
 
+app.post('/unsubscribe', (req, res) => {
+  unsubscribeUser(req.body)
+  res.status(200).send("Hello You!")
+})
+
+//Functions
 subscribeUser = (data) => {
   for(let i = 0; i < users.length; i++){
     if(users[i].id == data.id){
@@ -39,10 +47,26 @@ subscribeUser = (data) => {
       break
     }
   }
-  console.log(users)
 }
 
-let io = socket(server)
+unsubscribeUser = (data) => {
+  for(let i = 0; i < users.length; i++){
+    if(users[i].id == data.id){
+      data.stocks.forEach(function(stock){
+        if(users[i].stocks.includes(stock)){
+          let index = users[i].stocks.indexOf(stock)
+          if(index > -1){
+            users[i].stocks.splice(index, 1)
+          }
+        }
+      })
+      let mySocket = users[i].socketInfo
+      mySocket.emit('unsubscribe', users[i].stocks)
+      break
+    }
+  }
+  console.log(users)
+}
 
 addUser = (data) => {
   let user = new Object()
@@ -60,8 +84,10 @@ removeUser = (data) => {
       break
     }
   }
-  console.log(users)
 }
+
+//Socket Connections
+let io = socket(server)
 
 io.on('connection', (socket) => {
   addUser(socket)

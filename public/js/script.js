@@ -10,6 +10,11 @@ $(function(){
     $('#stocks').html(buildOutput(data))
   })
 
+  socket.on('unsubscribe', (data) => {
+    $('#stocks').html(buildOutput(data))
+  })
+
+
   buildOutput = (data) =>{
     let output = ""
     data.forEach(function(stock){
