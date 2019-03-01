@@ -14,8 +14,11 @@ const server = app.listen(port, () =>{
   pushTrigger()
 })
 
-//Holding data on the users and what they have subscribed to
-let users = []
+//Holding data on the users and what they have subscribed to. Mocked user for test
+let users = [
+  // { id: 'test',
+  //   stocks: ["Test Stock 1", "Test Stock 2"]}
+]
 let currentSubscriptions = []
 let pushInterval
 
@@ -27,15 +30,24 @@ app.use(bodyParser.json())
 //Routes
 app.post('/subscribe', (req, res) =>{
   subscribeUser(req.body)
-  res.status(200).send("Hello You!")
+  res.status(200).send(getUser(req.body))
 })
 
 app.post('/unsubscribe', (req, res) => {
   unsubscribeUser(req.body)
-  res.status(200).send("Hello You!")
+  res.status(200).send(getUser(req.body))
 })
 
 //Functions
+
+getUser = (data) => {
+  for(var i = 0; i < users.length; i++) {
+    if(users[i].id == data.id) {
+      return [users[i].id, users[i].stocks]
+    }
+  }
+}
+
 subscribeUser = (data) => {
   for(let i = 0; i < users.length; i++){
     if(users[i].id == data.id){
@@ -102,6 +114,8 @@ removeUser = (data) => {
 pushTrigger = () => {
   pushInterval = setInterval(pushFunction, 1000)
 }
+
+//Id like this to only fire when there are users with subscribers
 
 pushFunction = () => {
   users.forEach(function(user){
