@@ -8,7 +8,7 @@ A market data subscription microservicewith two routes
 - Subscribe
 - Unsubscribe
 
-##Prerequisites
+## Prerequisites
 
 The application needs the below to function;
 
@@ -18,7 +18,7 @@ Web browser (eg chrome) - https://www.google.com/chrome/
 
 API Tester(eg postman) - https://www.getpostman.com/downloads/
 
-##How to Run
+## How to Run
 
 1. Clone this repo
 2. Change into the repo and run `npm install`
@@ -52,7 +52,7 @@ A rough outline of the chunks of work I identified
 7. When they are subscribed, new data is pushed out only about the stocks they have subscribed to
 8. If no one is subscribed, the server should not trigger any functions
 
-##Technology used
+## Technology used
 
 - Express Server
 - Socket.io
@@ -75,3 +75,6 @@ This is something I started and didn't quite solve. Within the server there is a
 Right now, the clients receive an array with their subscribed stocks, my thinking is that in the future this can be used with not too much more work to bundle some more info on the stocks and send it straight to the browser. At the moment it just logs to the console
 
 Regarding the push function, I'd like this to only fire when there is a user with stock subscriptions. This will save resources on the server side.
+
+- **Stop Using postman**
+Going forward the application will need another way of making the subscribe/unsubscribe requests. My Thinking behind going this way was that in the future at some point these request routes can be easily integrated into other applications (eg text messaging, other dashboards)
