@@ -63,7 +63,7 @@ A rough outline of the chunks of work I identified
 ## Things to Improve
 
 - **Testing**
-With more time I would like to write more tests and follow the entire project through with a test driven approach and do some more research into testing web sockets. For example the tests don't really work well as they just mock behaviour for a user and don't actually create a new socket instance. In their current form they also need some changed to the main code to run which is not ideal. This is something I would like to spend more time on.
+With more time I would like to develop more tests and follow the entire project through with a test driven approach and complete more research into testing web sockets. For example the tests just mock behaviour for a user and don't actually create a new socket instance. In their current form they also need some changes to the main code to run which is not ideal. This is something I would like to spend more time on.
 
 - **Subscribe and Unsubscribe Functions**
 These feel quite clunky and bigger than they need to be, I'm sure this can be done with one function.
@@ -77,4 +77,4 @@ Right now, the clients receive an array with their subscribed stocks, my thinkin
 Regarding the push function, I'd like this to only fire when there is a user with stock subscriptions. This will save resources on the server side.
 
 - **Stop Using postman**
-Going forward the application will need another way of making the subscribe/unsubscribe requests. My Thinking behind going this way was that in the future at some point these request routes can be easily integrated into other applications (eg text messaging, other dashboards)
+Going forward the application will need another way of making the subscribe/unsubscribe requests. My thinking behind going this way is that in the future at some point these request routes can be easily integrated into other applications (eg text messaging, other dashboards)
