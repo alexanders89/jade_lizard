@@ -1,0 +1,30 @@
+{
+  "name": "jade_lizard",
+  "version": "1.0.0",
+  "description": "A stock subscription microservice",
+  "main": "index.js",
+  "scripts": {
+    "test": "node node_modules/.bin/mocha --exit",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexanders89/jade_lizard.git"
+  },
+  "author": "aes",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alexanders89/jade_lizard/issues"
+  },
+  "homepage": "https://github.com/alexanders89/jade_lizard#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "chai": "^4.2.0",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "mocha": "^6.0.2",
+    "nodemon": "^1.18.10",
+    "socket.io": "^2.2.0",
+    "supertest": "^3.4.2"
+  }
+}
