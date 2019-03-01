@@ -14,6 +14,11 @@ $(function(){
     $('#stocks').html(buildOutput(data))
   })
 
+  socket.on('update', (data) => {
+    console.log(data)
+  })
+
+
 
   buildOutput = (data) =>{
     let output = ""
@@ -27,7 +32,7 @@ $(function(){
       <div class='stockVolume'></div>
       </div>`
     })
-    console.log(output)
+    // console.log(output)
     return output
   }
 

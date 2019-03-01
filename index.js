@@ -11,11 +11,13 @@ const stockData = require('./tickData.json')
 
 const server = app.listen(port, () =>{
   console.log(`All is OK on port: ${port}`)
+  pushTrigger()
 })
 
 //Holding data on the users and what they have subscribed to
 let users = []
 let currentSubscriptions = []
+let pushInterval
 
 //middleware
 app.use(express.static('public'))
@@ -41,14 +43,19 @@ subscribeUser = (data) => {
         if(!users[i].stocks.includes(stock)){
           users[i].stocks.push(stock)
         }
+        if(!currentSubscriptions.includes(stock)){
+          currentSubscriptions.push(stock)
+        }
       })
       let mySocket = users[i].socketInfo
       mySocket.emit('subscribe', data.stocks)
       break
     }
   }
+  console.log(currentSubscriptions)
 }
 
+//This needs work, currently it removes all stocks even if someone else is subscribed
 unsubscribeUser = (data) => {
   for(let i = 0; i < users.length; i++){
     if(users[i].id == data.id){
@@ -59,13 +66,19 @@ unsubscribeUser = (data) => {
             users[i].stocks.splice(index, 1)
           }
         }
+        if(currentSubscriptions.includes(stock)){
+          var index = currentSubscriptions.indexOf(stock)
+          if(index > -1){
+            currentSubscriptions.splice(index, 1)
+          }
+        }
       })
       let mySocket = users[i].socketInfo
       mySocket.emit('unsubscribe', users[i].stocks)
       break
     }
   }
-  console.log(users)
+  console.log(currentSubscriptions)
 }
 
 addUser = (data) => {
@@ -74,7 +87,7 @@ addUser = (data) => {
   user.stocks = []
   users.push(user)
   user.socketInfo = data
-  console.log(users)
+  // console.log(users)
 }
 
 removeUser = (data) => {
@@ -84,6 +97,21 @@ removeUser = (data) => {
       break
     }
   }
+}
+
+pushTrigger = () => {
+  pushInterval = setInterval(pushFunction, 1000)
+}
+
+pushFunction = () => {
+  users.forEach(function(user){
+    if(user.stocks.length > 0){
+      let socket = user.socketInfo
+      socket.emit("update", user.stocks)
+    } else {
+      // clearInterval(pushInterval)
+    }
+  })
 }
 
 //Socket Connections
