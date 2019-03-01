@@ -3,7 +3,7 @@ Jade Lizard - A Stock Microservice
 
 # Task
 
-A market data subscription microservicewith two routes
+A market data subscription microservice with two routes
 
 - Subscribe
 - Unsubscribe
@@ -33,7 +33,7 @@ API Tester(eg postman) - https://www.getpostman.com/downloads/
 
 6. In the browser the stock feed is now available
 7. To unsubscribe, make the same request to 'localhost:3000/unsubscribe', listing the stocks you would like to remove
-8. To run tests w`npm test`
+8. To run tests `npm test`
 9. Enjoy!
 
 
@@ -63,7 +63,7 @@ A rough outline of the chunks of work I identified
 ## Things to Improve
 
 - **Testing**
-With more time I would like to write more tests and follow the entire project through with a test driven approach and do some more research into testing web sockets. For example the tests don't really work well as they just mock behaviour for a user and don't actually create a new socket instance. This is something I would like to spend more time on.
+With more time I would like to write more tests and follow the entire project through with a test driven approach and do some more research into testing web sockets. For example the tests don't really work well as they just mock behaviour for a user and don't actually create a new socket instance. In their current form they also need some changed to the main code to run which is not ideal. This is something I would like to spend more time on.
 
 - **Subscribe and Unsubscribe Functions**
 These feel quite clunky and bigger than they need to be, I'm sure this can be done with one function.
