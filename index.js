@@ -13,12 +13,34 @@ const server = app.listen(port, () =>{
   console.log("All is OK")
 })
 
+let users = []
+
 app.use(express.static('public'))
 
 let io = socket(server)
 
-io.on('connection', function(){
-  console.log("new user")
-})
+addUser = (data) => {
+  let user = new Object()
+  user.id = data.id
+  user.stocks = []
+  users.push(user)
+  console.log(users)
+}
 
+removeUser = (data) => {
+  for(let i = 0; i < users.length; i++){
+    if(users[i].id == data.id){
+      users.splice(i, 1)
+      break
+    }
+  }
+  console.log(users)
+}
+
+io.on('connection', (socket) => {
+  addUser(socket)
+  socket.on('disconnect', ()=>{
+    removeUser(socket)
+  })
+})
 module.exports = server
